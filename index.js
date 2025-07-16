@@ -20,10 +20,15 @@ global.JWT_SECRET = JWT_SECRET;
 
 // CORS
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:4000'],
+  origin: [
+    'https://movie-app-iota-brown-13.vercel.app', // ✅ Vercel frontend
+    'http://localhost:3000',
+    'http://localhost:4000'
+  ],
   credentials: true,
   optionsSuccessStatus: 200
 };
+app.use(cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Serve uploaded images
