@@ -1,12 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const movieController = require('../controllers/movie');
-const { verify, verifyAdmin } = require('../auth');
+const { verify, verifyAdmin } = require('../auth'); // make sure these middleware exist
+const upload = require('../middlewares/upload');
 
-router.post('/addMovie', verify, verifyAdmin, movieController.createMovie);
+// [POST] Create Movie
+router.post(
+  '/addMovie',
+  verify,
+  verifyAdmin,
+  upload.single('image'),
+  movieController.createMovie
+);
+
+// [GET] All Movies
 router.get('/getMovies', movieController.getMovies);
+
+// [GET] Single Movie
 router.get('/getMovie/:id', movieController.getMovieById);
-router.put('/updateMovie/:id', verify, verifyAdmin, movieController.updateMovie);
-router.delete('/deleteMovie/:id', verify, verifyAdmin, movieController.deleteMovie);
+
+// [PUT] Update Movie
+router.put(
+  '/updateMovie/:id',
+  verify,
+  verifyAdmin,
+  upload.single('image'),
+  movieController.updateMovie
+);
+
+// [DELETE] Delete Movie
+router.delete(
+  '/deleteMovie/:id',
+  verify,
+  verifyAdmin,
+  movieController.deleteMovie
+);
 
 module.exports = router;
